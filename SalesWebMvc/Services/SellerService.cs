@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using Microsoft.EntityFrameworkCore;
 namespace SalesWebMvc.Services
 {
     public class SellerService
@@ -34,10 +34,11 @@ namespace SalesWebMvc.Services
             _context.SaveChanges();
         }
 
-        //metodo para retorna o vendendor que tem o ID, se não tiver o ID retorna NULL        
+        //metodo para retorna o vendendor que tem o ID, se não tiver o ID retorna NULL
+        //metodo Include(obj => obj.Department), para retorna o departamento do vendendor.
         public Seller FindById(int id)
         {
-            return _context.Seller.FirstOrDefault(obj => obj.Id == id);
+            return _context.Seller.Include(obj => obj.Department).FirstOrDefault(obj => obj.Id == id);
         }
 
         //metodo para remoção do vendedor 

@@ -54,11 +54,13 @@ namespace SalesWebMvc.Controllers
 
         public IActionResult Delete(int? id)
         {
+            //identificar se o ID é nulo e return NotFound
             if (id == null)
             {
                 return NotFound();
             }
 
+            //buscar o obj, se for nulo return NotFound
             var obj = _sellerService.FindById(id.Value);
 
             if (obj == null)
@@ -66,16 +68,38 @@ namespace SalesWebMvc.Controllers
                 return NotFound();
             }
 
+            //se não for nulo retorna obj
             return View(obj);
 
 
         }
+
+        //metodo para deletar o vendendor
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(int id)
         {
             _sellerService.Remove(id);
             return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            //buscar o obj, se for nulo return NotFound
+            var obj = _sellerService.FindById(id.Value);
+
+            if (obj == null)
+            {
+                return NotFound();
+            }
+
+            //se não for nulo retorna obj
+            return View(obj);
         }
         
 
