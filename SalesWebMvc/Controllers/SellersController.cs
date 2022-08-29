@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SalesWebMvc.Models.ViewModels;
 
 namespace SalesWebMvc.Controllers
 {
@@ -17,11 +18,14 @@ namespace SalesWebMvc.Controllers
 
         //depedencia do banco de dados 
         private readonly SellerService _sellerService;
+        //depedencia da class "DeparmentService"
+        private readonly DeparmentService _deparmentService;
 
         //criação do construtor 
-        public SellersController(SellerService sellerService)
+        public SellersController(SellerService sellerService, DeparmentService deparmentService)
         {
             _sellerService = sellerService;
+            _deparmentService = deparmentService;
         }
 
         //ação para a visualição em lista dos vendendores..
@@ -30,10 +34,12 @@ namespace SalesWebMvc.Controllers
             var list = _sellerService.FindAll();
             return View(list);
         }
-        //ação para adicionar um novo vendendor.
+        //ação para abrir o formulario para adicionar um novo vendendor.
         public IActionResult Create()
-        {
-            return View();
+        {   //buscar todos os dados de departamento.
+            var departments = _deparmentService.FindAll();
+            var viewModel = new SellerFormViewModel { Departments = departments };
+            return View(viewModel);
         }
         
 

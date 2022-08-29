@@ -26,11 +26,10 @@ namespace SalesWebMvc.Services
         {
             return _context.Seller.ToList();
         }
-        //metodo para adicionar o "obj" no banco de dados.
+        //metodo para adicionar o "obj"(dados do vendendor) no banco de dados.
         public void Insert(Seller obj)
         {
-            //associar o primeiro departamento no vendendor
-            obj.Department = _context.Department.First();
+            
             _context.Add(obj);
             _context.SaveChanges();
         }
